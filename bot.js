@@ -23,34 +23,22 @@ client.on('messageCreate', async (message) => {
   // bỏ bot message
   if (message.author.bot) return;
 
-  // =========================
-  // 🔥 DEBUG QUAN TRỌNG NHẤT
-  // =========================
+  // debug
   console.log("EVENT FIRED:", message.content);
 
   // =========================
-  // 👉 TEST BOT REPLY CƠ BẢN (FIXED SAFE)
+  // TEST BOT
   // =========================
   if (message.content === "test") {
-    try {
-      await message.reply("ok");
-      console.log("REPLY SENT: ok");
-    } catch (err) {
-      console.error("REPLY ERROR (test):", err);
-    }
+    await message.channel.send("ok");
   }
 
   // =========================
-  // 👉 CHECK MENTION BOT (FIX CHUẨN + SAFE)
+  // MENTION BOT
   // =========================
   if (message.content.includes(`<@${client.user?.id}>`)) {
     console.log("BOT WAS MENTIONED");
-    try {
-      await message.reply("đừng nhờn với chế");
-      console.log("REPLY SENT: mention");
-    } catch (err) {
-      console.error("REPLY ERROR (mention):", err);
-    }
+    await message.channel.send("đừng nhờn với chế");
   }
 
   const payload = {
@@ -70,7 +58,6 @@ client.on('messageCreate', async (message) => {
   } catch (err) {
     console.error("Error:", err.message);
 
-    // retry 1 lần nếu fail
     setTimeout(() => {
       axios.post(WEB_APP_URL, payload).catch(() => {});
     }, 2000);
@@ -78,5 +65,5 @@ client.on('messageCreate', async (message) => {
 
 });
 
-// 🔴 DÁN DISCORD BOT TOKEN Ở ĐÂY
+// login bot
 client.login(process.env.DISCORD_TOKEN);
