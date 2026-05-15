@@ -127,7 +127,7 @@ client.on('messageCreate', async (message) => {
   // =========================
   // MENTION BOT → RANDOM
   // =========================
-  if (message.mentions.users.has(client.user.id)) {
+  if (message.mentions.has(client.user)) {
 
     const reply = roastReplies[
       Math.floor(Math.random() * roastReplies.length)
