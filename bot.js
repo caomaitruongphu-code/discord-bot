@@ -23,9 +23,34 @@ client.on('messageCreate', async (message) => {
   // bỏ bot message
   if (message.author.bot) return;
 
-  // 👉 FIX CHUẨN: check mention bằng ID (ổn định nhất)
-  if (message.mentions.users.has(client.user.id)) {
-    message.reply("đừng nhờn với chế");
+  // =========================
+  // 🔥 DEBUG QUAN TRỌNG NHẤT
+  // =========================
+  console.log("EVENT FIRED:", message.content);
+
+  // =========================
+  // 👉 TEST BOT REPLY CƠ BẢN (FIXED SAFE)
+  // =========================
+  if (message.content === "test") {
+    try {
+      await message.reply("ok");
+      console.log("REPLY SENT: ok");
+    } catch (err) {
+      console.error("REPLY ERROR (test):", err);
+    }
+  }
+
+  // =========================
+  // 👉 CHECK MENTION BOT (FIX CHUẨN + SAFE)
+  // =========================
+  if (message.content.includes(`<@${client.user?.id}>`)) {
+    console.log("BOT WAS MENTIONED");
+    try {
+      await message.reply("đừng nhờn với chế");
+      console.log("REPLY SENT: mention");
+    } catch (err) {
+      console.error("REPLY ERROR (mention):", err);
+    }
   }
 
   const payload = {
