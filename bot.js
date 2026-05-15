@@ -23,6 +23,11 @@ client.on('messageCreate', async (message) => {
   // bỏ bot message
   if (message.author.bot) return;
 
+  // 👉 FIX CHUẨN: check mention bằng ID (ổn định nhất)
+  if (message.mentions.users.has(client.user.id)) {
+    message.reply("đừng nhờn với chế");
+  }
+
   const payload = {
     time: new Date().toISOString(),
     user: message.author.username,
